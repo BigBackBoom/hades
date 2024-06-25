@@ -25,7 +25,6 @@ android {
     buildTypes {
         debug {
             isMinifyEnabled = true
-            isDebuggable = false
             testProguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -50,18 +49,13 @@ android {
             jvmTarget.set(JvmTarget.JVM_17)
         }
     }
-    externalNativeBuild {
-        cmake {
-            path = file("src/main/cpp/CMakeLists.txt")
-            version = "3.22.1"
-        }
-    }
 }
 
 dependencies {
 
     // Modules
     implementation(project(":core:designsystem"))
+    implementation(project(":imageprocessor"))
 
     // Dependencies
     implementation(libs.androidx.core.ktx)

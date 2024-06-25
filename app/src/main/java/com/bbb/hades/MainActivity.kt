@@ -44,7 +44,7 @@ class MainActivity  : ComponentActivity()  {
     companion object {
         // Used to load the 'hades' library on application startup.
         init {
-            System.loadLibrary("hades")
+            System.loadLibrary("image-processing")
         }
     }
 }

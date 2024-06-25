@@ -3,7 +3,9 @@ package com.bbb.hades.features
 import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -11,12 +13,14 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bbb.hades.R
 import com.bbb.hades.viewmodel.ImageProcessingViewModel
@@ -30,13 +34,19 @@ fun ImageProcessingScreen(
     val imageByte = viewModel.imageByte.collectAsState().value
     val processingTime = viewModel.processingTime.collectAsState().value
 
-    LaunchedEffect(Unit) {
-        viewModel.loadImage()
-    }
+//    LaunchedEffect(Unit) {
+//        viewModel.loadImage()
+//    }
     ImageProcessingContent(
         modifier = modifier,
         imageByte = imageByte,
-        processingTime = processingTime
+        processingTime = processingTime,
+        onClickNativeButton = {
+            viewModel.loadImage(ImageProcessingViewModel.ImageProcessingType.NATIVE)
+        },
+        onClickJavaButton = {
+            viewModel.loadImage(ImageProcessingViewModel.ImageProcessingType.JAVA)
+        }
     )
 }
 
@@ -45,7 +55,9 @@ fun ImageProcessingScreen(
 private fun ImageProcessingContent(
     modifier: Modifier,
     imageByte: ByteArray,
-    processingTime: Long
+    processingTime: Long,
+    onClickNativeButton: () -> Unit = {},
+    onClickJavaButton: () -> Unit = {}
 ) {
     Scaffold(
         modifier = modifier,
@@ -75,9 +87,36 @@ private fun ImageProcessingContent(
                     contentDescription = "Image"
                 )
                 Text(
-                    text = stringResource(R.string.image_processing_processing_time, processingTime),
+                    text = stringResource(
+                        R.string.image_processing_processing_time,
+                        processingTime
+                    ),
                     style = MaterialTheme.typography.bodyMedium
                 )
+            } else {
+                Image(
+                    painter = painterResource(id = R.drawable.sample),
+                    contentDescription = "Image"
+                )
+            }
+            Button(
+                modifier = Modifier
+                    .align(CenterHorizontally)
+                    .padding(24.dp)
+                    .fillMaxWidth(),
+                onClick = onClickNativeButton,
+            ) {
+                Text(text = stringResource(R.string.image_processing_start_ndk_button))
+            }
+
+            Button(
+                modifier = Modifier
+                    .align(CenterHorizontally)
+                    .padding(24.dp)
+                    .fillMaxWidth(),
+                onClick = onClickJavaButton,
+            ) {
+                Text(text = stringResource(R.string.image_processing_start_java_button))
             }
         }
     }

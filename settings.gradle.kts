@@ -23,4 +23,4 @@ rootProject.name = "hades"
 include(":app")
 include(":core:designsystem")
 include(":core:common")
-//include(":imageprocessor")
+include(":imageprocessor")

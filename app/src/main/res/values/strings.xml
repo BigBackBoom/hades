@@ -4,4 +4,6 @@
     <!-- Image Processing -->
     <string name="image_processing_title">Image Process</string>
     <string name="image_processing_processing_time">Processing time: %s ms</string>
+    <string name="image_processing_start_ndk_button">Process with NDK</string>
+    <string name="image_processing_start_java_button">Process with Java</string>
 </resources>
