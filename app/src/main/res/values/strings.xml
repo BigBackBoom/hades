@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">hades</string>
+
+    <!-- Image Processing -->
+    <string name="image_processing_title">Image Process</string>
+    <string name="image_processing_processing_time">Processing time: %s ms</string>
+</resources>
