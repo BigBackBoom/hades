@@ -6,7 +6,8 @@
 //
 
 extern "C" JNIEXPORT void JNICALL
-Java_com_bbb_imageprocessor_AlphaBlender_processImage(JNIEnv *env, jobject thiz,
+Java_com_bbb_imageprocessor_AlphaBlender_processImage(JNIEnv *env,
+                                                      jobject thiz,
                                                       jbyteArray bmp_byte_array,
                                                       jintArray rgba_array) {
     jsize size = env->GetArrayLength(bmp_byte_array);

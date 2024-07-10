@@ -2,14 +2,18 @@ package com.bbb.hades.features
 
 import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -34,9 +38,6 @@ fun ImageProcessingScreen(
     val imageByte = viewModel.imageByte.collectAsState().value
     val processingTime = viewModel.processingTime.collectAsState().value
 
-//    LaunchedEffect(Unit) {
-//        viewModel.loadImage()
-//    }
     ImageProcessingContent(
         modifier = modifier,
         imageByte = imageByte,
@@ -99,25 +100,80 @@ private fun ImageProcessingContent(
                     contentDescription = "Image"
                 )
             }
-            Button(
-                modifier = Modifier
-                    .align(CenterHorizontally)
-                    .padding(24.dp)
-                    .fillMaxWidth(),
-                onClick = onClickNativeButton,
-            ) {
-                Text(text = stringResource(R.string.image_processing_start_ndk_button))
-            }
 
-            Button(
-                modifier = Modifier
-                    .align(CenterHorizontally)
-                    .padding(24.dp)
-                    .fillMaxWidth(),
-                onClick = onClickJavaButton,
-            ) {
-                Text(text = stringResource(R.string.image_processing_start_java_button))
-            }
+            ImageProcessingExecuteButtons(
+                modifier = Modifier.align(CenterHorizontally),
+                onClickNativeButton = onClickNativeButton,
+                onClickJavaButton = onClickJavaButton
+            )
         }
+    }
+}
+
+@Composable
+private fun ImageProcessingExecuteButtons(
+    modifier: Modifier,
+    onClickNativeButton: () -> Unit = {},
+    onClickJavaButton: () -> Unit = {}
+) {
+    Button(
+        modifier = modifier
+            .padding(24.dp)
+            .fillMaxWidth(),
+        onClick = onClickNativeButton,
+    ) {
+        Text(text = stringResource(R.string.image_processing_start_ndk_button))
+    }
+
+    Button(
+        modifier = modifier
+            .padding(24.dp)
+            .fillMaxWidth(),
+        onClick = onClickJavaButton,
+    ) {
+        Text(text = stringResource(R.string.image_processing_start_java_button))
+    }
+}
+
+@Composable
+private fun ImageProcessingColorField() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        TextField(
+            modifier = Modifier
+                .width(96.dp)
+                .padding(horizontal = 8.dp),
+            value = "",
+            onValueChange = { },
+            label = { Text(text = stringResource(R.string.image_processing_red_text_field_label)) },
+
+        )
+        TextField(
+            modifier = Modifier
+                .width(96.dp)
+                .padding(horizontal = 8.dp),
+            value = "",
+            onValueChange = { },
+            label = { Text(text = stringResource(R.string.image_processing_green_text_field_label)) },
+        )
+        TextField(
+            modifier = Modifier
+                .width(96.dp)
+                .padding(horizontal = 8.dp),
+            value = "",
+            onValueChange = { },
+            label = { Text(text = stringResource(R.string.image_processing_blue_text_field_label)) },
+        )
+        TextField(
+            modifier = Modifier
+                .width(96.dp)
+                .padding(horizontal = 8.dp),
+            value = "",
+            onValueChange = { },
+            label = { Text(text = stringResource(R.string.image_processing_alpha_text_field_label)) },
+        )
     }
 }
