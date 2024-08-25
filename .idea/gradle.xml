@@ -13,6 +13,8 @@
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/core/common" />
             <option value="$PROJECT_DIR$/core/designsystem" />
+            <option value="$PROJECT_DIR$/glesimageprocessor" />
+            <option value="$PROJECT_DIR$/imageprocessor" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />
