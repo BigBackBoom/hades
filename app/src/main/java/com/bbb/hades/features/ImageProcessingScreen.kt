@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
@@ -25,7 +26,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.bbb.glesimageprocessor.GLES3JNIView
 import com.bbb.hades.R
 import com.bbb.hades.viewmodel.ImageProcessingViewModel
 
@@ -106,7 +109,7 @@ private fun ImageProcessingContent(
                 onClickNativeButton = onClickNativeButton,
                 onClickJavaButton = onClickJavaButton
             )
-
+            GlScreen()
         }
     }
 }
@@ -177,4 +180,15 @@ private fun ImageProcessingColorField() {
             label = { Text(text = stringResource(R.string.image_processing_alpha_text_field_label)) },
         )
     }
+}
+
+@Composable
+fun GlScreen() {
+    AndroidView(
+        modifier = Modifier
+            .fillMaxWidth(),
+        factory = { context ->
+            GLES3JNIView(context)
+        }
+    )
 }

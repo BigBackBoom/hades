@@ -24,7 +24,7 @@ android {
 
     buildTypes {
         debug {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
             testProguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -56,6 +56,7 @@ dependencies {
     // Modules
     implementation(project(":core:designsystem"))
     implementation(project(":imageprocessor"))
+    implementation(project(":glesimageprocessor"))
 
     // Dependencies
     implementation(libs.androidx.core.ktx)

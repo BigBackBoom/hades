@@ -16,12 +16,15 @@ class GLES3JNIView(
 
     private class Renderer : GLSurfaceView.Renderer {
         override fun onDrawFrame(gl: GL10) {
+            GLES3JNILib.step()
         }
 
         override fun onSurfaceChanged(gl: GL10, width: Int, height: Int) {
+            GLES3JNILib.resize(width, height)
         }
 
         override fun onSurfaceCreated(gl: GL10, config: EGLConfig) {
+            GLES3JNILib.init()
         }
     }
 }
