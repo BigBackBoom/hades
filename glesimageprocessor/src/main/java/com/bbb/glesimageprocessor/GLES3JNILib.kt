@@ -6,7 +6,7 @@ object GLES3JNILib {
         System.loadLibrary("image-glesprocessing")
     }
 
-    external fun init()
+    external fun init(bmpByteArray: ByteArray)
     external fun resize(width: Int, height: Int)
-    external fun step()
+    external fun step(rgbaArray: IntArray)
 }

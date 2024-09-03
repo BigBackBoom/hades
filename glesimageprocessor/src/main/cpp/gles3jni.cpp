@@ -15,6 +15,7 @@
  */
 
 #include "gles3jni.h"
+#include "simple_renderer_es3.h"
 
 #include <jni.h>
 #include <stdlib.h>
@@ -226,14 +227,18 @@ void Renderer::render() {
 // ----------------------------------------------------------------------------
 
 static Renderer* g_renderer = NULL;
+static SimpleRendererES3* g_simple_renderer = NULL;
+static unsigned char *bmp = NULL;
 
 extern "C" {
 JNIEXPORT void JNICALL Java_com_bbb_glesimageprocessor_GLES3JNILib_init(JNIEnv* env,
-                                                                        jobject obj);
+                                                                        jobject obj,
+                                                                        jbyteArray bmp_byte_array);
 JNIEXPORT void JNICALL Java_com_bbb_glesimageprocessor_GLES3JNILib_resize(
     JNIEnv* env, jobject obj, jint width, jint height);
 JNIEXPORT void JNICALL Java_com_bbb_glesimageprocessor_GLES3JNILib_step(JNIEnv* env,
-                                                                  jobject obj);
+                                                                  jobject obj,
+                                                                  jintArray rgba_array);
 };
 
 #if !defined(DYNAMIC_ES3)
@@ -241,7 +246,8 @@ static GLboolean gl3stubInit() { return GL_TRUE; }
 #endif
 
 JNIEXPORT void JNICALL Java_com_bbb_glesimageprocessor_GLES3JNILib_init(JNIEnv* env,
-                                                                  jobject obj) {
+                                                                  jobject obj,
+                                                                  jbyteArray bmp_byte_array) {
   if (g_renderer) {
     delete g_renderer;
     g_renderer = NULL;
@@ -254,7 +260,12 @@ JNIEXPORT void JNICALL Java_com_bbb_glesimageprocessor_GLES3JNILib_init(JNIEnv* 
 
   const char* versionStr = (const char*)glGetString(GL_VERSION);
   if (strstr(versionStr, "OpenGL ES 3.") && gl3stubInit()) {
-    g_renderer = createES3Renderer();
+//    g_renderer = createES3Renderer();
+    jsize size = env->GetArrayLength(bmp_byte_array);
+    bmp = (unsigned char *) malloc(sizeof(unsigned char) * size);
+    env->GetByteArrayRegion(bmp_byte_array, 0, size, (jbyte *) bmp);
+
+    g_simple_renderer= createSimpleRendererES3(5184, 3456, bmp);
   } else {
     ALOGE("Unsupported OpenGL ES version");
   }
@@ -263,13 +274,18 @@ JNIEXPORT void JNICALL Java_com_bbb_glesimageprocessor_GLES3JNILib_init(JNIEnv* 
 JNIEXPORT void JNICALL Java_com_bbb_glesimageprocessor_GLES3JNILib_resize(
     JNIEnv* env, jobject obj, jint width, jint height) {
   if (g_renderer) {
-    g_renderer->resize(width, height);
+//    g_renderer->resize(width, height);
   }
 }
 
 JNIEXPORT void JNICALL Java_com_bbb_glesimageprocessor_GLES3JNILib_step(JNIEnv* env,
-                                                                  jobject obj) {
-  if (g_renderer) {
-    g_renderer->render();
+                                                                  jobject obj,
+                                                                  jintArray rgba_array) {
+  if (g_simple_renderer) {
+    int *rgba = (int *) malloc(sizeof(int) * 4);
+    env->GetIntArrayRegion(rgba_array, 0, 4, (jint *) rgba);
+
+    g_simple_renderer->draw(5184, 3456, rgba);
+    free(rgba);
   }
 }

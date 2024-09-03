@@ -11,10 +11,10 @@ cmake_minimum_required(VERSION 3.22.1)
 # build script scope).
 project("image-glesprocessing")
 
-#set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g -O2")
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g -O2")
 #set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -g -O2")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-rtti -fno-exceptions -Wall")
 set(OPENGL_LIB GLESv3)
 
@@ -34,7 +34,8 @@ set(OPENGL_LIB GLESv3)
 add_library(${CMAKE_PROJECT_NAME} SHARED
         # List C/C++ source files with relative paths to this CMakeLists.txt.
         gles3jni.cpp
-        RendererES3.cpp)
+        RendererES3.cpp
+        SimpleRendererES3.cpp)
 
 # Specifies libraries CMake should link to your target library. You
 # can link libraries from various origins, such as libraries defined in this

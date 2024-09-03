@@ -18,6 +18,9 @@ class ImageProcessingViewModel @Inject constructor(
     application: Application
 ) : AndroidViewModel(application) {
 
+    private val _originalImage: MutableStateFlow<ByteArray> = MutableStateFlow(ByteArray(0))
+    val originalImage: StateFlow<ByteArray> = _originalImage.asStateFlow()
+
     private val _imageByte: MutableStateFlow<ByteArray> = MutableStateFlow(ByteArray(0))
     val imageByte: StateFlow<ByteArray> = _imageByte.asStateFlow()
 
@@ -26,6 +29,21 @@ class ImageProcessingViewModel @Inject constructor(
 
     private val androidApplication: Application
         get() = getApplication()
+
+    init {
+        val stream = androidApplication.resources.openRawResource(R.raw.sample)
+        try {
+            val bytes = ByteArray(stream.available())
+            stream.read(bytes)
+
+            _originalImage.update {
+                bytes
+            }
+
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
 
     fun loadImage(type: ImageProcessingType) {
 

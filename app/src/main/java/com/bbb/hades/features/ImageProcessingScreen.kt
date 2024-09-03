@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
@@ -40,9 +39,11 @@ fun ImageProcessingScreen(
 ) {
     val imageByte = viewModel.imageByte.collectAsState().value
     val processingTime = viewModel.processingTime.collectAsState().value
+    val originalImage = viewModel.originalImage.collectAsState().value
 
     ImageProcessingContent(
         modifier = modifier,
+        originalImage = originalImage,
         imageByte = imageByte,
         processingTime = processingTime,
         onClickNativeButton = {
@@ -58,6 +59,7 @@ fun ImageProcessingScreen(
 @Composable
 private fun ImageProcessingContent(
     modifier: Modifier,
+    originalImage: ByteArray,
     imageByte: ByteArray,
     processingTime: Long,
     onClickNativeButton: () -> Unit = {},
@@ -109,7 +111,10 @@ private fun ImageProcessingContent(
                 onClickNativeButton = onClickNativeButton,
                 onClickJavaButton = onClickJavaButton
             )
-            GlScreen()
+
+            if (originalImage.isNotEmpty()) {
+                GlScreen(originalImage.sliceArray(IntRange(54, originalImage.size - 1)))
+            }
         }
     }
 }
@@ -183,12 +188,12 @@ private fun ImageProcessingColorField() {
 }
 
 @Composable
-fun GlScreen() {
+fun GlScreen(imageByteArray: ByteArray) {
     AndroidView(
         modifier = Modifier
             .fillMaxWidth(),
         factory = { context ->
-            GLES3JNIView(context)
+            GLES3JNIView(context, imageByteArray)
         }
     )
 }
