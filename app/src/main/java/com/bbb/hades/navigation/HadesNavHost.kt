@@ -12,6 +12,6 @@ fun HadesNavHost(
     navController: NavHostController = rememberNavController(),
 ) {
     NavHost(navController = navController, startDestination = IMAGE_PROCESSING_ROUTE) {
-        imageProcessingScreen(modifier)
+        imageProcessing(modifier)
     }
 }

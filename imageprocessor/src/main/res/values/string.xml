@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="image_processing_title">Image Process</string>
+    <string name="image_processing_processing_time">Processing time: %s ms</string>
+    <string name="image_processing_red_text_field_label">Red</string>
+    <string name="image_processing_green_text_field_label">Green</string>
+    <string name="image_processing_blue_text_field_label">Blue</string>
+    <string name="image_processing_alpha_text_field_label">Alpha</string>
+    <string name="image_processing_start_ndk_button">Process with NDK</string>
+    <string name="image_processing_start_java_button">Process with Java</string>
+</resources>
