@@ -55,6 +55,7 @@ dependencies {
 
     // Modules
     implementation(project(":core:designsystem"))
+    implementation(project(":core:common"))
     implementation(project(":imageprocessor"))
     implementation(project(":glesimageprocessor"))
 

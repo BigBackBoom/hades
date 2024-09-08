@@ -5,13 +5,15 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.bbb.imageprocessor.navigation.imageProcessing
 
 @Composable
 fun HadesNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
 ) {
-    NavHost(navController = navController, startDestination = IMAGE_PROCESSING_ROUTE) {
+    NavHost(navController = navController, startDestination = ScreenChooserRoute.ScreenChooser.route) {
         imageProcessing(modifier)
+        screenChooser(modifier)
     }
 }
