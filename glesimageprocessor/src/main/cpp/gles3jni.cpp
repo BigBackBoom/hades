@@ -266,6 +266,7 @@ JNIEXPORT void JNICALL Java_com_bbb_glesimageprocessor_GLES3JNILib_init(JNIEnv* 
     env->GetByteArrayRegion(bmp_byte_array, 0, size, (jbyte *) bmp);
 
     g_simple_renderer= createSimpleRendererES3(5184, 3456, bmp);
+    free(bmp);
   } else {
     ALOGE("Unsupported OpenGL ES version");
   }

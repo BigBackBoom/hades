@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.bbb.glesimageprocessor.navigation.navigateToImageGlProcessing
 import com.bbb.hades.R
 import com.bbb.hades.core.common.LocalNavController
 import com.bbb.imageprocessor.navigation.navigateToImageProcessing
@@ -29,6 +30,9 @@ fun ViewChoosingScreen(
         modifier = modifier,
         onImageProcessorNavigationClicked = {
             navController.navigateToImageProcessing()
+        },
+        onImageProcessorGlNavigationClicked = {
+            navController.navigateToImageGlProcessing()
         }
     )
 }
@@ -71,6 +75,15 @@ private fun ViewChoosingContent(
                 onClick = onImageProcessorNavigationClicked
             ){
                 Text(text = "Navigate to Image Processing Screen")
+            }
+
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                onClick = onImageProcessorGlNavigationClicked
+            ){
+                Text(text = "Navigate to Image Processing GL Screen")
             }
         }
     }
